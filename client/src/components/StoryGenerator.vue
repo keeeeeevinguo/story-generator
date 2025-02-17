@@ -1,14 +1,14 @@
 <template>
-  <div class="story-generator">
+  <div class="story-generator bg-gradient-to-r from-blue-100 to-purple-100 min-h-screen">
     <div class="hamburger" @click="toggleMenu">
       <div class="bar"></div>
       <div class="bar"></div>
       <div class="bar"></div>
     </div>
+    
     <div v-if="menuOpen" class="side-menu">
       <div class="menu-content">
         <h3>Settings</h3>
-        <!-- Grade Level Selector -->
         <div class="grade-selector">
           <label for="grade-select">Select Reading Grade Level:</label>
           <select id="grade-select" v-model="gradeReadingLevel">
@@ -21,7 +21,6 @@
           </select>
         </div>
 
-        <!-- Vocabulary Input -->
         <div class="vocab-input">
           <label for="vocab">Vocabulary Words (comma-separated):</label>
           <input
@@ -48,12 +47,14 @@
 
 
     <div class="main-content">
-      <input
-        v-model="userPrompt"
-        type="text"
-        placeholder="Enter a topic for the story"
-      />
-      <button @click="generateStory">Generate Story</button>
+      <div class="input-container">
+        <input
+          v-model="userPrompt"
+          type="text"
+          placeholder="Enter a topic for the story"
+        />
+        <button @click="generateStory">Generate Story</button>
+      </div>
 
       <div v-if="loading" class="loading">
         Generating story... Please wait.
@@ -82,7 +83,7 @@ export default {
       menuOpen: false,
       userPrompt: '',
       story: '',
-      gradeReadingLevel: '3rd Grade', 
+      gradeReadingLevel: '', 
       vocabWords: '', 
       error: '',
       loading: false,
@@ -184,10 +185,22 @@ input[type="text"] {
   margin-right: 1rem;
   margin-bottom: 1rem;
 }
+.input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 .loading {
   margin-top: 1rem;

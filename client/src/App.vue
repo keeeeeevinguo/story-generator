@@ -1,8 +1,8 @@
 <!-- frontend/src/App.vue -->
 <template>
   <div id="app">
-    <h1>Story Generator</h1>
-    <StoryGenerator />
+    <h1 style="text-align: center;">Story Generator</h1>
+    <StoryGenerator/>
   </div>
 </template>
 
