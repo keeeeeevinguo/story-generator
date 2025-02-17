@@ -56,8 +56,16 @@
         <button @click="generateStory">Generate Story</button>
       </div>
 
+      <button @click="saveCurrentStory" :disabled="!story">
+        Save Story
+      </button>
+      <button @click="toggleSavedStories">
+        {{ showSavedStories ? 'Hide Saved Stories' : 'Show Saved Stories' }}
+      </button>
+
       <div v-if="loading" class="loading">
-        Generating story... Please wait.
+        Cool story loading...
+        <div class="spinner"></div>
       </div>
 
       <div v-if="story" class="story-content">
@@ -68,6 +76,17 @@
 
       <div v-if="error" class="error">
         <strong>Error:</strong> {{ error }}
+      </div>
+
+      <div v-if="savedStories.length && showSavedStories" class="saved-stories">
+        <h2>Saved Stories</h2>
+        <div v-for="(item, index) in savedStories" :key="item.id" class="saved-story">
+          <h3>Story {{ index + 1 }}</h3>
+          <p><strong>Prompt:</strong> {{ item.prompt }}</p>
+          <p v-html="item.content"></p>
+          <p><em>Generated at: {{ item.generated_at }}</em></p>
+          <button @click="deleteStory(item.id)">Delete Story</button>
+        </div>
       </div>
     </div>
   </div>
@@ -88,6 +107,8 @@ export default {
       error: '',
       loading: false,
       storyGenre: '',
+      savedStories: [],
+      showSavedStories: false
     };
   },
   computed: {
@@ -118,6 +139,48 @@ export default {
         this.loading = false;
       }
     },
+    async saveCurrentStory() {
+      if (!this.story) {
+        this.error = "No story to save.";
+        return;
+      }
+      this.error = '';
+      try {
+        const res = await axios.post('http://localhost:8000/save_story', {
+          prompt: this.userPrompt,
+          story: this.story
+        });
+        alert('Story saved successfully!');
+      } catch (err) {
+        this.error = err.response?.data?.error || err.message;
+      }
+    },
+    async retrieveSavedStories() {
+      this.error = '';
+      try {
+        const res = await axios.get('http://localhost:8000/stories');
+        this.savedStories = res.data.stories;
+      } catch (err) {
+        this.error = err.response?.data?.error || err.message;
+      }
+    },
+    async toggleSavedStories() {
+      if (!this.showSavedStories) {
+        await this.retrieveSavedStories();
+        this.showSavedStories = true;
+      } else {
+        this.showSavedStories = false;
+      }
+    },
+    async deleteStory(storyId) {
+    this.error = '';
+    try {
+      await axios.delete(`http://localhost:8000/delete_story/${storyId}`);
+      await this.retrieveSavedStories();
+    } catch (err) {
+      this.error = err.response?.data?.error || err.message;
+    }
+  }
   },
 };
 </script>
@@ -201,14 +264,39 @@ button {
   border: none;
   border-radius: 4px;
   transition: background-color 0.3s ease;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
 }
 .loading {
   margin-top: 1rem;
   font-style: italic;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .story-content {
   margin-top: 2rem;
   text-align: left;
+}
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #4CAF50;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 .error {
   color: red;

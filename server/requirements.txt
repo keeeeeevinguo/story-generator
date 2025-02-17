@@ -2,3 +2,5 @@ sanic
 python-dotenv
 anthropic
 sanic-cors
+tortoise-orm
+aiomysql
