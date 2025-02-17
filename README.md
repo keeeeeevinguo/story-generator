@@ -12,11 +12,12 @@ This project is a mock-up to explore the potential for AI to generate personaliz
 - **Custom Settings:** Select a reading grade level, specify vocabulary words, and choose a genre
 - **Story Generation:** Generates a complete children's story tailored to the given parameters
 - **Responsive UI:** A Vue.js interface with a hamburger menu for settings
+- **Integrated Database:** A MySQL database that allows users to save, retrieve and delete generated stories
 
 ## Project Set Up
 
 1. Clone the repository using `git clone`
 
-2. Create a `.env` file in the root directory with your API key
+2. Create a `.env` file in the root directory with your API key, MYSQL username, password, host, and database name
 
 3. Run `./run.sh` to start up the frontend and backend
