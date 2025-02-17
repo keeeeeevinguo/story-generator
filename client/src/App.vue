@@ -1,0 +1,27 @@
+<!-- frontend/src/App.vue -->
+<template>
+  <div id="app">
+    <h1>Story Generator</h1>
+    <StoryGenerator />
+  </div>
+</template>
+
+<script>
+import StoryGenerator from './components/StoryGenerator.vue';
+
+export default {
+  name: 'App',
+  components: {
+    StoryGenerator,
+  },
+};
+</script>
+
+<style>
+/* Optional styling */
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+</style>

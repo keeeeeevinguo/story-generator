@@ -1,0 +1,4 @@
+sanic
+python-dotenv
+anthropic
+sanic-cors
