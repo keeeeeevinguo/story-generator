@@ -91,17 +91,14 @@ export default {
   },
   computed: {
     formattedStory() {
-      // Replace newline characters with <br> tags
       return this.story.replace(/\n/g, '<br>');
     }
   },
   methods: {
     toggleMenu() {
-      // Toggle the state of menuOpen
       this.menuOpen = !this.menuOpen;
     },
     async generateStory() {
-      // reset data
       this.story = '';
       this.error = '';
       this.loading = true;
@@ -128,21 +125,19 @@ export default {
 .story-generator {
   position: relative;
   margin-top: 2rem;
-  padding-left: 50px; /* leave room for hamburger button */
+  padding-left: 50px;
 }
-
-/* Hamburger Button */
 .hamburger {
-  position: fixed; /* Fixed positioning anchors it to the viewport */
-  top: 10px;       /* Adjust as needed */
-  left: 10px;      /* Adjust as needed */
+  position: fixed; 
+  top: 10px;      
+  left: 10px;      
   width: 30px;
   height: 25px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
-  z-index: 1001;   /* High z-index so it stays on top */
+  z-index: 1001;   
 }
 .hamburger .bar {
   height: 4px;
@@ -150,10 +145,8 @@ export default {
   background-color: #333;
   border-radius: 2px;
 }
-
-/* Side Menu */
 .side-menu {
-  position: fixed;  /* Fixed so it appears at the top left corner of the viewport */
+  position: fixed;  
   top: 0;
   left: 0;
   width: 400px;
@@ -181,10 +174,8 @@ input[type="text"] {
   font-size: 1rem;
   box-sizing: border-box;
 }
-
-/* Main Content */
 .main-content {
-  margin-top: 50px; /* ensure content is not hidden behind menu */
+  margin-top: 50px;
 }
 input[type="text"] {
   padding: 0.5rem;

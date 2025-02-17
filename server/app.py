@@ -7,10 +7,8 @@ import os
 from pathlib import Path
 from sanic_cors import CORS
 
-# Get the directory containing the script
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load environment variables from the project root
 load_dotenv(BASE_DIR / '.env')
 
 app = Sanic("StorybookGenerator")
@@ -22,18 +20,8 @@ client = anthropic.Anthropic()
 async def index(request):
     return await file("static/index.html")
 
-
-
-# You might need to serve additional static assets:
-app.add_static("/css", "./static/css", name="css_static")
-app.add_static("/js", "./static/js", name="js_static")
-app.add_static("/assets", "./static/assets", name="assets_static")
-
 @app.route("/generate_story", methods=["POST"])
 async def generate_story(request):
-    """
-    Endpoint to generate a children's story based on a user prompt/topic.
-    """
     data = request.json
     prompt = data.get("prompt", "")
     grade = data.get("grade", "3rd Grade")
@@ -45,7 +33,6 @@ async def generate_story(request):
         return json({"error": "No prompt provided"}, status=400)
 
     try:
-        # Call OpenAI (or any other LLM) to generate the story
         response = client.messages.create(
             model="claude-3-5-sonnet-20241022",
             system="""You are a bestselling children's book author who writes stories directly without asking for clarification. 

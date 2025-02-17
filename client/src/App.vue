@@ -18,7 +18,6 @@ export default {
 </script>
 
 <style>
-/* Optional styling */
 #app {
   max-width: 600px;
   margin: 0 auto;
